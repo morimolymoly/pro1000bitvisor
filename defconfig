@@ -1,0 +1,28 @@
+struct config_data config = {
+	.vmm = {
+		.f11panic = 1,
+		.f12msg = 1,
+		.auto_reboot = 1,
+		.panic_reboot = 0,
+		.shell = 1,
+		.dbgsh = 1,
+		.no_intr_intercept = 0,
+		.ignore_tsc_invariant = 0,
+		.unsafe_nested_virtualization = 0,
+		.tty_mac_address = {
+			0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF
+		},
+		.tty_syslog = {
+			.enable = 0,
+			.src_ipaddr = { 0, 0, 0, 0 },
+			.dst_ipaddr = { 0, 0, 0, 0 },
+		},
+		.tty_pro1000 = 0,
+		.tty_rtl8169 = 0,
+		.tty_x540 = 0,
+		.tty_ieee1394 = 0,
+		.driver = {
+			.pci = "driver=pro1000,net=ippass",
+		},
+	},
+};

@@ -1,0 +1,40 @@
+
+moly@yayoi:~/sotsuken/HyperAine$ ifconfig
+br0: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
+        inet 192.168.200.43  netmask 255.255.0.0  broadcast 192.168.255.255
+        inet6 fe80::fab1:56ff:fec0:ea88  prefixlen 64  scopeid 0x20<link>
+        ether f8:b1:56:c0:ea:88  txqueuelen 1000  (Ethernet)
+        RX packets 22685  bytes 17352553 (17.3 MB)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 16333  bytes 2441179 (2.4 MB)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+
+enp0s25: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
+        ether f8:b1:56:c0:ea:88  txqueuelen 1000  (Ethernet)
+        RX packets 23982  bytes 17836151 (17.8 MB)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 16616  bytes 2584001 (2.5 MB)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+        device interrupt 20  memory 0xfb300000-fb320000
+
+enp6s0: flags=4099<UP,BROADCAST,MULTICAST>  mtu 1500
+        ether 00:0a:f7:2d:52:b0  txqueuelen 1000  (Ethernet)
+        RX packets 0  bytes 0 (0.0 B)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 0  bytes 0 (0.0 B)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+        device interrupt 17
+
+lo: flags=73<UP,LOOPBACK,RUNNING>  mtu 65536
+        inet 127.0.0.1  netmask 255.0.0.0
+        inet6 ::1  prefixlen 128  scopeid 0x10<host>
+        loop  txqueuelen 1000  (Local Loopback)
+        RX packets 759  bytes 64782 (64.7 KB)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 759  bytes 64782 (64.7 KB)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+
+moly@yayoi:~/sotsuken/HyperAine$ ip route show
+default via 192.168.18.20 dev br0
+169.254.0.0/16 dev br0 scope link metric 1000
+192.168.0.0/16 dev br0 proto kernel scope link src 192.168.200.43

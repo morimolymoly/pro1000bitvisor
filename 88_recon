@@ -1,0 +1,28 @@
+#!/bin/sh
+set -e
+
+datarootdir="/usr/share"
+
+. "${datarootdir}/grub/grub-mkconfig_lib"
+
+if [ \! -f /boot/efi/recon/bitvisor.elf ]; then
+    exit 0
+fi
+
+if [ \! -f /boot/efi/recon/loadvmm.efi ]; then
+    exit 0
+fi
+
+echo "Found Recon image" >&2
+
+cat << EOF
+menuentry "recon" {
+    echo 'Loading Recon ...'
+    insmod chain
+    insmod part_gpt
+    insmod search_fs_uuid
+    search --fs-uuid --no-floppy --set=root D9A0-E1B5
+    chainloader (\${root})/recon/loadvmm.efi
+    boot
+}
+EOF
