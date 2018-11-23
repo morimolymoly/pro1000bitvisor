@@ -1299,10 +1299,11 @@ pro1000_enable_dma_and_memory (struct pci_device *pci_device)
 			 PCI_CONFIG_COMMAND);
 	command = command_orig | PCI_CONFIG_COMMAND_MEMENABLE |
 		PCI_CONFIG_COMMAND_BUSMASTER;
-	if (command != command_orig)
-		printf("PRO1000 ENABLE DMA AND MEMORY: WRITE COMMAND: 0x%lx\n", command);
+	if (command != command_orig){
+		printf("PRO1000 ENABLE DMA AND MEMORY: WRITE COMMAND: 0x%x\n", command);
 		pci_config_write (pci_device, &command, sizeof command,
 				  PCI_CONFIG_COMMAND);
+	}
 }
 
 static void
