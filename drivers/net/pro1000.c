@@ -1592,8 +1592,8 @@ vpn_pro1000_new (struct pci_device *pci_device, bool option_tty,
 		seize_pro1000 (d2);
 		net_start (d2->nethandle);
 	}
-	u32 status_pro1000 = *(u32 *)d2->d1[0].map + 0x00008;
-	printf("PRO1000 status's MMIO register address is 0x%p\n", (u32 *)d2->d1[0].map + 0x00008);
+	u32 status_pro1000 = *(u32 *)(d2->d1[0].map + 0x00008);
+	printf("PRO1000 status's MMIO register address is 0x%p\n", (u32 *)(d2->d1[0].map + 0x00008));
 	printf("PRO1000 status is 0x%x\n", status_pro1000);
 	LIST1_PUSH (d2list, d2);
 	return;
