@@ -16,7 +16,6 @@
  *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
- * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
  * ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE
  * LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
  * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
@@ -31,7 +30,6 @@
 
 typedef unsigned int UINT;
 
-struct data2* dp_1000;
 static const char driver_name[] = "pro1000";
 static const char driver_longname[] = "Intel PRO/1000 driver";
 
@@ -1402,6 +1400,7 @@ vpn_pro1000_new (struct pci_device *pci_device, bool option_tty,
 	u32 status_pro1000 = *(u32 *)(d2->d1[0].map + 0x00008);
 	printf("PRO1000 status's MMIO register address is 0x%p\n", (u32 *)(d2->d1[0].map + 0x00008));
 	printf("PRO1000 status is 0x%x\n", status_pro1000);
+	dp_1000 = d2;
 	LIST1_PUSH (d2list, d2);
 	return;
 }
