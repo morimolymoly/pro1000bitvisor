@@ -1231,6 +1231,7 @@ reghook (struct data *d, int i, struct pci_bar_info *bar)
 						  CORE_IO_PRIO_EXCLUSIVE,
 						  driver_name);
 	} else {
+		printf("PRO1000 MEMORY BAR%d: 0x%llx\n", i, bar->base);
 		d->mapaddr = bar->base;
 		d->maplen = bar->len;
 		d->map = mapmem_gphys (bar->base, bar->len, MAPMEM_WRITE);
@@ -1293,12 +1294,13 @@ static void
 pro1000_enable_dma_and_memory (struct pci_device *pci_device)
 {
 	u32 command_orig, command;
-
+	printf("PRO1000 ENABLE DMA AND MEMORY: COMMAND OFFSET: 0x%lx\n", PCI_CONFIG_COMMAND);
 	pci_config_read (pci_device, &command_orig, sizeof command_orig,
 			 PCI_CONFIG_COMMAND);
 	command = command_orig | PCI_CONFIG_COMMAND_MEMENABLE |
 		PCI_CONFIG_COMMAND_BUSMASTER;
 	if (command != command_orig)
+		printf("PRO1000 ENABLE DMA AND MEMORY: WRITE COMMAND: 0x%lx\n", command);
 		pci_config_write (pci_device, &command, sizeof command,
 				  PCI_CONFIG_COMMAND);
 }
@@ -1541,7 +1543,6 @@ vpn_pro1000_new (struct pci_device *pci_device, bool option_tty,
 		pci_get_bar_info (pci_device, i, &bar_info);
 		reghook (&d[i], i, &bar_info);
 	}
-	printf("PRO1000 BAR: 0x%llx\n", bar_info.base);
 	if(d2->seize) {
 		printf("PRO1000 SEIZE\n");
 	} else {
