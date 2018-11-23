@@ -1235,6 +1235,7 @@ reghook (struct data *d, int i, struct pci_bar_info *bar)
 		d->mapaddr = bar->base;
 		d->maplen = bar->len;
 		d->map = mapmem_gphys (bar->base, bar->len, MAPMEM_WRITE);
+		printf("PRO1000 BAR%d HOST PAGE ADDRESS: 0x%lx", i, d->map);
 		if (!d->map)
 			panic ("mapmem failed");
 		d->io = 0;
