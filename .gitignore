@@ -2,6 +2,7 @@
 *.a
 *.d
 *~
+.vscode
 process/process_builtin.s
 bitvisor.elf
 bitvisor.map

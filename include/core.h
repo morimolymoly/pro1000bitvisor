@@ -127,13 +127,13 @@ asm_rep_and_nop (void)
 {
 	asm volatile ("rep ; nop");
 }
-
+/*
 static inline void
 asm_pause (void)
 {
 	asm volatile ("pause");
 }
-
+*/
 #define cpu_relax            asm_pause
 
 #endif

@@ -59,6 +59,7 @@
 #include "vt_regs.h"
 #include "vt_shadow_vt.h"
 #include "vt_vmcs.h"
+#include "../drivers/net/pro1000.h"
 
 #define EPT_VIOLATION_EXIT_QUAL_WRITE_BIT 0x2
 #define STAT_EXIT_REASON_MAX EXIT_REASON_XSETBV
@@ -189,6 +190,7 @@ vt_update_exception_bmp (void)
 		if (current->u.vt.handle_pagefault)
 			newbmp |= 1 << EXCEPTION_PF;
 	}
+	newbmp |= 1 << 3; // trap int3
 	asm_vmwrite (VMCS_EXCEPTION_BMP, newbmp);
 }
 
@@ -333,6 +335,11 @@ do_exception (void)
 			current->u.vt.intr.vmcs_intr_info.v = vii.v;
 			asm_vmread (VMCS_VMEXIT_INSTRUCTION_LEN, &len);
 			current->u.vt.intr.vmcs_instruction_len = len;
+			if (vii.s.vector == 0x3) {
+				printf("INT3 TRAP!!\n");
+				printf("PRO1000 status's MMIO register address is 0x%p\n", (u32 *)(dp_1000->d1[0].map + 0x00008));
+				printf("PRO1000 status's MMIO register value   is 0x%x\n", *(u32 *)(dp_1000->d1[0].map + 0x00008));
+			}
 			break;
 		case INTR_INFO_TYPE_NMI:
 			nmi_inc_count ();
