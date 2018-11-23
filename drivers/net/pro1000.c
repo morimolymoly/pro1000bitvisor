@@ -1235,7 +1235,7 @@ reghook (struct data *d, int i, struct pci_bar_info *bar)
 		d->mapaddr = bar->base;
 		d->maplen = bar->len;
 		d->map = mapmem_gphys (bar->base, bar->len, MAPMEM_WRITE);
-		printf("PRO1000 BAR%d HOST PAGE ADDRESS: 0x%lx", i, d->map);
+		printf("PRO1000 BAR%d HOST PAGE ADDRESS: 0x%p\n", i, d->map);
 		if (!d->map)
 			panic ("mapmem failed");
 		d->io = 0;
@@ -1545,11 +1545,6 @@ vpn_pro1000_new (struct pci_device *pci_device, bool option_tty,
 		pci_get_bar_info (pci_device, i, &bar_info);
 		reghook (&d[i], i, &bar_info);
 	}
-	if(d2->seize) {
-		printf("PRO1000 SEIZE\n");
-	} else {
-		printf("PRO1000 not SEIZE\n");
-	}
 	d->disable = false;
 	d2->d1 = d;
 	pro1000_enable_dma_and_memory (pci_device);
@@ -1583,6 +1578,11 @@ vpn_pro1000_new (struct pci_device *pci_device, bool option_tty,
 		d2->seize = net_init (d2->nethandle, d2, &phys_func, NULL,
 				      NULL);
 	}
+	if(d2->seize) {
+		printf("PRO1000 SEIZE\n");
+	} else {
+		printf("PRO1000 not SEIZE\n");
+	}
 	if (d2->seize) {
 		pci_system_disconnect (pci_device);
 		/* Enabling bus master and memory space again because
@@ -1592,6 +1592,8 @@ vpn_pro1000_new (struct pci_device *pci_device, bool option_tty,
 		seize_pro1000 (d2);
 		net_start (d2->nethandle);
 	}
+	u32 status_pro1000 = *(u32 *)d2->d1[0].map + 0x00008;
+	printf("PRO1000 status is 0x%x\n", status_pro1000);
 	LIST1_PUSH (d2list, d2);
 	return;
 }
