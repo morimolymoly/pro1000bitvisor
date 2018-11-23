@@ -1541,6 +1541,12 @@ vpn_pro1000_new (struct pci_device *pci_device, bool option_tty,
 		pci_get_bar_info (pci_device, i, &bar_info);
 		reghook (&d[i], i, &bar_info);
 	}
+	printf("PRO1000 BAR: 0x%llx\n", bar_info.base);
+	if(d2->seize) {
+		printf("PRO1000 SEIZE\n");
+	} else {
+		printf("PRO1000 not SEIZE\n");
+	}
 	d->disable = false;
 	d2->d1 = d;
 	pro1000_enable_dma_and_memory (pci_device);
